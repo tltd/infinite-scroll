@@ -222,13 +222,10 @@ proto.updateGetPathTemplate = function( optPath ) {
 };
 
 let pathRegexes = [
-  // WordPress & Tumblr - example.com/page/2
-  // Jekyll - example.com/page2
-  /^(.*?\/?page\/?)(\d\d?\d?)(.*?$)/,
-  // Drupal - example.com/?page=1
-  /^(.*?\/?\?page=)(\d\d?\d?)(.*?$)/,
-  // catch all, last occurence of a number
-  /(.*?)(\d\d?\d?)(?!.*\d)(.*?$)/,
+  // - example.com/?page=1
+  // - example.com/test?page=1
+  // - example.com/test?bla=3&page=1
+  /^(.*?[\?|&]?page=)(\d\d?\d?)(.*?$)/,
 ];
 
 // try matching href to pathRegexes patterns
