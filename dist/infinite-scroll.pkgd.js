@@ -665,14 +665,18 @@ proto.updateGetPathSelector = function( optPath ) {
   // parse href of link: '.next-page-link'
   let hrefElem = document.querySelector( optPath );
   if ( !hrefElem ) {
-    console.error(`Bad InfiniteScroll path option. Next link not found: ${optPath}`);
+    if (this.options.debug) {
+      console.error(`Bad InfiniteScroll path option. Next link not found: ${optPath}`);
+    }
     return;
   }
 
   let href = hrefElem.getAttribute('href');
   let pathParts = getPathParts( href );
   if ( !pathParts ) {
-    console.error(`InfiniteScroll unable to parse next link href: ${href}`);
+    if (this.options.debug) {
+      console.error(`InfiniteScroll unable to parse next link href: ${href}`);
+    }
     return;
   }
 
@@ -951,7 +955,9 @@ function refreshScripts( fragment ) {
 proto.appendOutlayerItems = function( fragment, appendReady ) {
   let imagesLoaded = InfiniteScroll.imagesLoaded || window.imagesLoaded;
   if ( !imagesLoaded ) {
-    console.error('[InfiniteScroll] imagesLoaded required for outlayer option');
+    if (this.options.debug) {
+      console.error('[InfiniteScroll] imagesLoaded required for outlayer option');
+    }
     this.isLoading = false;
     return;
   }
@@ -1021,7 +1027,9 @@ InfiniteScroll.create.prefill = function() {
 
   let append = this.options.append;
   if ( !append ) {
-    console.error(`append option required for prefill. Set as :${append}`);
+    if (this.options.debug) {
+      console.error(`append option required for prefill. Set as :${append}`);
+    }
     return;
   }
   this.updateMeasurements();
@@ -1202,8 +1210,10 @@ InfiniteScroll.create.history = function() {
   let linkOrigin = link.origin || link.protocol + '//' + link.host;
   let isSameOrigin = linkOrigin == location.origin;
   if ( !isSameOrigin ) {
-    console.error( '[InfiniteScroll] cannot set history with different origin: ' +
-      `${link.origin} on ${location.origin} . History behavior disabled.` );
+    if (this.options.debug) {
+      console.error( '[InfiniteScroll] cannot set history with different origin: ' +
+        `${link.origin} on ${location.origin} . History behavior disabled.` );
+    }
     return;
   }
 
@@ -1618,7 +1628,9 @@ function ImagesLoaded( elem, options, onAlways ) {
   }
   // bail if bad element
   if ( !queryElem ) {
-    console.error( 'Bad element for imagesLoaded ' + ( queryElem || elem ) );
+    if (this.options.debug) {
+      console.error( 'Bad element for imagesLoaded ' + ( queryElem || elem ) );
+    }
     return;
   }
 

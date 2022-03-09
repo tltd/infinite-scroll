@@ -27,7 +27,9 @@ function InfiniteScroll( element, options ) {
   let queryElem = utils.getQueryElement( element );
 
   if ( !queryElem ) {
-    console.error( 'Bad element for InfiniteScroll: ' + ( queryElem || element ) );
+    if (this.options.debug) {
+      console.error( 'Bad element for InfiniteScroll: ' + ( queryElem || element ) );
+    }
     return;
   }
   element = queryElem;
@@ -83,7 +85,9 @@ proto.create = function() {
   // bail if getPath not set, or returns falsey #776
   let hasPath = this.getPath && this.getPath();
   if ( !hasPath ) {
-    console.error('Disabling InfiniteScroll');
+    if (this.options.debug) {
+      console.error('Disabling InfiniteScroll');
+    }
     return;
   }
   this.updateGetAbsolutePath();
@@ -181,7 +185,9 @@ proto.updateScroller = function() {
 proto.updateGetPath = function() {
   let optPath = this.options.path;
   if ( !optPath ) {
-    console.error(`InfiniteScroll path option required. Set as: ${optPath}`);
+    if (this.options.debug) {
+      console.error(`InfiniteScroll path option required. Set as: ${optPath}`);
+    }
     return;
   }
   // function
@@ -244,14 +250,18 @@ proto.updateGetPathSelector = function( optPath ) {
   // parse href of link: '.next-page-link'
   let hrefElem = document.querySelector( optPath );
   if ( !hrefElem ) {
-    console.error(`Bad InfiniteScroll path option. Next link not found: ${optPath}`);
+    if (this.options.debug) {
+      console.error(`Bad InfiniteScroll path option. Next link not found: ${optPath}`);
+    }
     return;
   }
 
   let href = hrefElem.getAttribute('href');
   let pathParts = getPathParts( href );
   if ( !pathParts ) {
-    console.error(`InfiniteScroll unable to parse next link href: ${href}`);
+    if (this.options.debug) {
+      console.error(`InfiniteScroll unable to parse next link href: ${href}`);
+    }
     return;
   }
 
